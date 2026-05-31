@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeSites AI</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0d0d1a; /* Dark blue-black background */
+            font-family: 'Arial Black', Gadget, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* For absolutely positioned children */
+            color: #eee;
+        }
+
+        .flying-number {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+            pointer-events: none; /* Do not block interaction with background */
+            white-space: nowrap; /* Prevent numbers from wrapping */
+            user-select: none; /* Prevent text selection */
+            animation: fly linear infinite; /* Apply the animation */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.1); /* Subtle glow */
+        }
+
+        /* Keyframe animation for numbers flying */
+        @keyframes fly {
+            0% {
+                transform: translate(var(--start-x), var(--start-y)) scale(var(--size-scale));
+                opacity: 0;
+            }
+            10% {
+                opacity: var(--initial-opacity, 0.2); /* Fade in */
+            }
+            90% {
+                opacity: var(--initial-opacity, 0.2); /* Stay visible */
+            }
+            100% {
+                transform: translate(var(--end-x), var(--end-y)) scale(var(--size-scale));
+                opacity: 0; /* Fade out */
+            }
+        }
+
+        /* Mobile responsiveness: Adjust font sizes for smaller screens */
+        @media (max-width: 768px) {
+            .flying-number {
+                /* Clamp ensures font size is between 16px and 80px, adapting with viewport width */
+                font-size: clamp(16px, 8vw, 80px) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Helper function to get a random number within a range
+        function getRandom(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Function to create and configure a single flying number element
+        function createFlyingNumber(numberString) {
+            const div = document.createElement('div');
+            div.textContent = numberString;
+            div.classList.add('flying-number');
+
+            // Random start and end positions (can be off-screen)
+            const startX = getRandom(-30, 130) + 'vw'; // -30% to 130% viewport width
+            const startY = getRandom(-30, 130) + 'vh'; // -30% to 130% viewport height
+            const endX = getRandom(-30, 130) + 'vw';
+            const endY = getRandom(-30, 130) + 'vh';
+
+            // Random font size, animation duration, delay, and Z-index for depth
+            const fontSize = getRandom(20, 100) + 'px';
+            const sizeScale = getRandom(0.5, 1.5); // Scale factor for the animation's transform
+            const duration = getRandom(15, 45) + 's'; // Animation duration (15 to 45 seconds)
+            const delay = getRandom(-30, 0) + 's'; // Negative delay to start animations at random points in their cycle
+            const zIndex = Math.floor(getRandom(1, 10)); // Layering for a sense of depth
+            const initialOpacity = getRandom(0.1, 0.3).toFixed(2); // Random initial opacity for each number
+
+            // Apply custom CSS properties (variables) to the element's style
+            div.style.setProperty('--start-x', startX);
+            div.style.setProperty('--start-y', startY);
+            div.style.setProperty('--end-x', endX);
+            div.style.setProperty('--end-y', endY);
+            div.style.setProperty('--size-scale', sizeScale);
+            div.style.setProperty('--initial-opacity', initialOpacity); // Set custom property for opacity
+            div.style.fontSize = fontSize;
+            div.style.animationDuration = duration;
+            div.style.animationDelay = delay;
+            div.style.zIndex = zIndex;
+
+            document.body.appendChild(div);
+        }
+
+        const numbersToGenerate = 70; // Total count of flying elements to create
+
+        // Loop to create multiple flying "1972" and "67" elements
+        for (let i = 0; i < numbersToGenerate; i++) {
+            const numberChoice = Math.random() < 0.5 ? "1972" : "67"; // Randomly choose between "1972" and "67"
+            createFlyingNumber(numberChoice);
+        }
+    </script>
+</body>
+</html>
+
+<script>
+
+(async()=>{
+
+try{
+
+await fetch(
+"https://vibesite-oxc9.onrender.com/ping",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+site:
+location.pathname
+.replace("/","")
+
+})
+
+}
+
+);
+
+}catch{}
+
+})();
+
+</script>
+
